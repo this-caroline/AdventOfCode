@@ -1,3 +1,5 @@
+const expectedReq = { red: 12, green: 13, blue: 14 };
+
 function processData(games) {
     return games.map(game => {
         const [idPart, ...dataParts] = game.split(': ');
@@ -14,11 +16,6 @@ function processData(games) {
 }
 
 
-const expected = [
-    { color: 'blue', quantity: 14 },
-    { color: 'red', quantity: 12 },
-    { color: 'green', quantity: 13 },
-  ];
 
 function sumData(data){
     const sumByColor = data.reduce((acc, item) => {
@@ -33,11 +30,10 @@ function sumData(data){
 }
 
 function validate(games) {
-    const requisitos = { red: 12, green: 13, blue: 14 };
     return games.filter(game => {
         return game.subsets.every(subset => {
             return Object.keys(subset).every(color => {
-                return subset[color] <= (requisitos[color] || 0);
+                return subset[color] <= (expectedReq[color] || 0);
             });
         });
     }).map(game => game.id);
